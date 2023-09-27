@@ -34,7 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        //Prueba commit
         // Add a marker in Ovalle and move the camera
         LatLng ovalle = new LatLng(-30.60271665994994, -71.19756580634903);
         mMap.addMarker(new MarkerOptions().position(ovalle).title("Ovalle"));
