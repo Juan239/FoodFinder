@@ -15,6 +15,7 @@ import com.example.foodfinder_02.databinding.ActivityMapsBinding;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    //Prueba Commit
     private ActivityMapsBinding binding;
 
     @Override
