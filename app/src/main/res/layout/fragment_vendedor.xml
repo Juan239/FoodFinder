@@ -50,11 +50,11 @@ tools:context=".vendedorFragment">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/username"
+            android:id="@+id/nombreDelLocal"
             android:background="@drawable/custom_edittext"
             android:drawableLeft="@drawable/baseline_usuario_inicio_sesion"
             android:drawablePadding="8dp"
-            android:hint="Correo electronico"
+            android:hint="Nombre del local"
             android:textColorHint="#77000000"
             android:padding="8dp"
             android:textColor="@color/black"
