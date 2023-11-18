@@ -1,18 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/principal"
     tools:context=".vistaVendedorActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hola"
-        android:textSize="40sp"
-        />
+        android:id="@+id/constraintLayout"
+        android:layout_marginTop="20dp">
 
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/txtLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restaurant"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/row1"
+            android:orientation="vertical"
+            android:layout_marginTop="0dp"
+            android:padding="10dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtLocal">
+
+            <!-- CardView Informacion del local-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/informacionLocal"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="20dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/localcomida">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtInfoLocal"
+                        android:text="Información del local"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/fondo_textview"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="90dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView Establecer ubicación-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/establecerUbicacion"
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/mapaovalle">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEstablecerUbicacion"
+                        android:text="Establecer ubicación"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/fondo_textview"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="90dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView Establecer Horario-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/establecerHorario"
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/calendario">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtHorario"
+                        android:text="Establecer horario"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/fondo_textview"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="90dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView Establecer Horario-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cerrarSesion"
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/cerrarsesion">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtCerrarSesion"
+                        android:text="Cerrar sesión"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/fondo_textview"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="90dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="50dp"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
