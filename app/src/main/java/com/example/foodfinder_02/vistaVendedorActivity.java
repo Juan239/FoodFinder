@@ -1,9 +1,15 @@
 package com.example.foodfinder_02;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,8 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class vistaVendedorActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private CardView infoLocal, ubicacion, horario, cerrarSesion;
+    private int contador = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        contador++;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_vendedor);
         auth = FirebaseAuth.getInstance();
@@ -63,7 +71,24 @@ public class vistaVendedorActivity extends AppCompatActivity {
         startActivity(new Intent(this, establecerHorarioActivity.class));
     }
     private void cerrarSesion(){
+        // Eliminar la preferencia de autenticación
+        SharedPreferences sharedPreferences = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("estaLogueado");
+        editor.apply();
         FirebaseAuth.getInstance().signOut();
+        finish();
         startActivity(new Intent(this, MenuPrincipal.class));
     }
+
+    @Override
+    public void onBackPressed() {
+        /*Supuestamente al eliminar el start activity se soluciona el problema de generar muchos activities al volver atras
+          pero al menos la primera vez que lo probe al iniciar sesion por primera vez y querer volver atras se cerraba todo
+          no afectaba al inicio de sesion, pero la idea es que vuelva al menu principal y no se cierre todo
+         */
+        startActivity(new Intent(vistaVendedorActivity.this, MenuPrincipal.class));
+        finish();
+    }
+
 }

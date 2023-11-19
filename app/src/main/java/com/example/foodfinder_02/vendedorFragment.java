@@ -1,15 +1,20 @@
 package com.example.foodfinder_02;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +38,7 @@ public class vendedorFragment extends Fragment {
     private EditText ETnombreLocal, ETcontrasenia;
     private FirebaseAuth auth;
     private TextView registrar;
+    private CheckBox checkBoxIS;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,6 +51,11 @@ public class vendedorFragment extends Fragment {
         ETcontrasenia = rootView.findViewById(R.id.password);
         iniciar = rootView.findViewById(R.id.loginButton);
         registrar = rootView.findViewById(R.id.txtRegistrarse);
+        checkBoxIS = rootView.findViewById(R.id.checkboxSesion);
+
+        // Obtener las preferencias compartidas
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +70,14 @@ public class vendedorFragment extends Fragment {
                     auth.signInWithEmailAndPassword(correo, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
+                            if(checkBoxIS.isChecked()){
+                                editor.putBoolean("estaLogueado", true);
+                                editor.apply();
+                            }
+
                             Toast.makeText(getActivity(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), vistaVendedorActivity.class));
+                            getActivity().finish();
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -109,4 +126,5 @@ public class vendedorFragment extends Fragment {
             return true;
         }
     }
+
 }

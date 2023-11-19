@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/principal"
     tools:context=".infoLocalActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleccione el logo de su local"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_margin="20dp"/>
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/logoLocal"
+        android:background="@drawable/fondo_imagen_logo"
+        android:src="@drawable/subirimagen"
+        android:padding="10dp"
+        android:layout_marginBottom="50dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Ingrese el nombre de su local"
+        android:background="@drawable/fondo_edit_text_blanco"
+        android:id="@+id/ETnombreLocal"
+        android:padding="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Ingrese una descripción del local"
+        android:gravity="top"
+        android:id="@+id/ETdescripcionLocal"
+        android:background="@drawable/fondo_edit_text_blanco"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar cambios"
+        android:textColor="@color/white"
+        android:id="@+id/btnGuardarInfoLocal"
+        android:backgroundTint="@color/azul3"
+        android:layout_marginTop="100dp"/>
+
+
+</LinearLayout>

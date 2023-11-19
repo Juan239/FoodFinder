@@ -6,29 +6,28 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.foodfinder_02.databinding.ActivityMainBinding;
 import com.example.foodfinder_02.databinding.ActivityMenuPrincipalBinding;
 
 public class MenuPrincipal extends AppCompatActivity {
-
-
-/*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_principal);
-    }
-
- */
-
     ActivityMenuPrincipalBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMenuPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Obtener las preferencias compartidas
+        SharedPreferences sharedPreferences = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+
+        // Verificar el estado de autenticación
+        boolean isLoggedIn = sharedPreferences.getBoolean("estaLogueado", false);
+
         replaceFragment(new usuarioFragment());
         binding.bottomNavigationView.setBackground(null);
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -37,7 +36,12 @@ public class MenuPrincipal extends AppCompatActivity {
             if (itemId == R.id.irMapa) {
                 replaceFragment(new usuarioFragment());
             } else if (itemId == R.id.vendedor) {
-                replaceFragment(new vendedorFragment());
+                if(isLoggedIn){
+                    startActivity(new Intent(MenuPrincipal.this, vistaVendedorActivity.class));
+                    finish();
+                }else{
+                    replaceFragment(new vendedorFragment());
+                }
             } else if (itemId == R.id.ayuda) {
                 replaceFragment(new ayudaFragment());
             }
