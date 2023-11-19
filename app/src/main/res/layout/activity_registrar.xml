@@ -64,20 +64,6 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/registroNombreLocal"
-                android:background="@drawable/custom_edittext"
-                android:drawableLeft="@drawable/baseline_usuario_inicio_sesion"
-                android:drawablePadding="8dp"
-                android:hint="Nombre del local"
-                android:textColorHint="#77000000"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="25dp"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:id="@+id/registroPassword"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_contrasenia"

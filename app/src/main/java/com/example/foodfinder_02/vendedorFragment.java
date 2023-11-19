@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,15 +29,16 @@ import java.util.Objects;
 
 
 public class vendedorFragment extends Fragment {
-    Button iniciar;
+    private Button iniciar;
     private EditText ETnombreLocal, ETcontrasenia;
-    TextView registrar;
+    private FirebaseAuth auth;
+    private TextView registrar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_vendedor, container, false);
-
+        auth = FirebaseAuth.getInstance();
         ///////////////////////////////////////////////////////////////////////////////////////////////7
         //Esto es para recibir el texto de los editText y verificarlo al presionar el boton
         ETnombreLocal = rootView.findViewById(R.id.nombreDelLocal);
@@ -48,7 +53,22 @@ public class vendedorFragment extends Fragment {
 
                 }
                 else{
-                    revisarUsuario();
+                    String correo = ETnombreLocal.getText().toString();
+                    String password = ETcontrasenia.getText().toString();
+
+                    auth.signInWithEmailAndPassword(correo, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            Toast.makeText(getActivity(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getActivity(), vistaVendedorActivity.class));
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), "Hubo un error en el inicio de sesión", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
@@ -66,44 +86,7 @@ public class vendedorFragment extends Fragment {
         return rootView;
     }
 
-    public void revisarUsuario(){
-        String nombreLocal = ETnombreLocal.getText().toString().trim();
-        String contrasenia = ETcontrasenia.getText().toString().trim();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-        //Esta parte debe cambiar, no deberia de tener que tomar el nombre de usuario, sino el correo
-        Query chequearUsuario = reference.orderByChild("nombre").equalTo(nombreLocal);
-
-        chequearUsuario.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    //seguir con esto
-                    ETnombreLocal.setError(null);
-                    //El error ocurre aca, intenta buscar un "hijo" de correo electronico, pero en la base de datos el "padre" es el nombre de usuario
-                    String contraseniaDesdeBD = snapshot.child(nombreLocal).child("contrasenia").getValue(String.class);
-                    if( Objects.equals(contraseniaDesdeBD, contrasenia)){
-                        ETcontrasenia.setError(null);
-                        Intent intent2 = new Intent(getActivity(), vistaVendedorActivity.class);
-                        startActivity(intent2);
-                    }
-                    else {
-                        Toast.makeText(getActivity(), "La contraseña es incorrecta", Toast.LENGTH_SHORT).show();
-                        ETcontrasenia.requestFocus();
-                    }
-                }
-                else{
-                    Toast.makeText(getActivity(), "El usuario no existe", Toast.LENGTH_SHORT).show();
-                    ETnombreLocal.requestFocus();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     public boolean validarnombre(){
         String val = ETnombreLocal.getText().toString();

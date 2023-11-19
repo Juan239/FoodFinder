@@ -9,6 +9,10 @@ public class rUsuario {
         // Constructor vacío requerido por Firebase
     }
 
+    public rUsuario(String correo){
+        this.correo = correo;
+    }
+
     public rUsuario(String nombre, String correo, String contrasenia) {
         this.nombre = nombre;
         this.correo = correo;

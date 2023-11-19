@@ -14,12 +14,15 @@ import android.widget.Toast;
 import com.example.foodfinder_02.clases.rUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class registrarActivity extends AppCompatActivity {
+    private FirebaseAuth auth;
     Button btnRegistrar;
-    EditText ETnombreLocal, ETcorreo, ETpassword;
+    EditText ETcorreo, ETpassword;
     DatabaseReference reference;
     FirebaseDatabase database;
     @Override
@@ -27,8 +30,8 @@ public class registrarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
+        auth = FirebaseAuth.getInstance();
         btnRegistrar = findViewById(R.id.btnRegistro);
-        ETnombreLocal = findViewById(R.id.registroNombreLocal);
         ETcorreo = findViewById(R.id.registroCorreoElectronico);
         ETpassword = findViewById(R.id.registroPassword);
 
@@ -40,24 +43,30 @@ public class registrarActivity extends AppCompatActivity {
                 database = FirebaseDatabase.getInstance();
                 reference = database.getReference("Usuarios");
 
-                String nombreLocal = ETnombreLocal.getText().toString();
                 String correo = ETcorreo.getText().toString();
                 String password = ETpassword.getText().toString();
 
-                rUsuario usuario = new rUsuario(nombreLocal, correo, password);
-                reference.child(nombreLocal).setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(registrarActivity.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(registrarActivity.this, vistaVendedorActivity.class);
-                            startActivity(intent);
+                if(correo.isEmpty()){
+                    ETcorreo.setError("El correo no puede estar en blanco");
+                }
+                if(password.isEmpty()){
+                    ETpassword.setError("Escriba su contraseña");
+                }
+                else{
+                    auth.createUserWithEmailAndPassword(correo, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(registrarActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(registrarActivity.this, vistaVendedorActivity.class));
+                            } else {
+                                Toast.makeText(registrarActivity.this, "Registro fallido" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else{
-                            Toast.makeText(registrarActivity.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
+
+
 
                 // Guarda el usuario en la base de datos Firebase con el correo como clave
 
