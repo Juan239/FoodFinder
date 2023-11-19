@@ -8,13 +8,7 @@
     android:orientation="vertical"
     >
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="76dp"
-        android:text="Hola"
-        android:layout_gravity="start"
-        android:backgroundTint="@color/azul1"
- />
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
