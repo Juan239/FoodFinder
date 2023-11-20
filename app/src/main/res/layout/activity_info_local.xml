@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seleccione el logo de su local"
+        android:text="Seleccione el logo o imagen de su local"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:layout_margin="20dp"/>
@@ -29,7 +29,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Ingrese el nombre de su local"
