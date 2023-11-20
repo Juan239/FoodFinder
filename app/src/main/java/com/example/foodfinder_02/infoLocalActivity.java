@@ -40,7 +40,7 @@ public class infoLocalActivity extends AppCompatActivity {
     private ImageView imagen;
     private EditText ETnombre, ETdescripcion;
     private FirebaseDatabase database;
-    private DatabaseReference reference;
+    private DatabaseReference reference, reference2;
     private StorageReference storageReference;
     private FirebaseStorage storage;
     private ActivityResultLauncher<Intent> galleryLauncher;
@@ -170,7 +170,7 @@ public class infoLocalActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference().child("images").child(imageName);
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference("locales").child(imageName);
+        reference2 = database.getReference("locales").child(imageName);
 
         // Verifica la existencia del archivo
         storageRef.getMetadata().addOnSuccessListener(new OnSuccessListener() {
@@ -193,7 +193,7 @@ public class infoLocalActivity extends AppCompatActivity {
                         imageView.setImageBitmap(bitmap);
 
                                     //Agregar los datos a los editText
-                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        reference2.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 String nombreLocal = snapshot.child("nombreLocal").getValue(String.class);
