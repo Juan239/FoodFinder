@@ -55,6 +55,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/txtMapa"
                         android:text="Ir al mapa"
+                        android:background="@drawable/fondo_textview"
                         android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"

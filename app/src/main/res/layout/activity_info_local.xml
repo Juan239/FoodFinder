@@ -33,6 +33,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Ingrese el nombre de su local"
+        android:textColorHint="#99000000"
+        android:textColor="@color/black"
         android:background="@drawable/fondo_edit_text_blanco"
         android:id="@+id/ETnombreLocal"
         android:padding="10dp"/>
@@ -43,7 +45,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Ingrese una descripción del local"
+        android:textColorHint="#99000000"
         android:gravity="top"
+        android:textColor="@color/black"
         android:id="@+id/ETdescripcionLocal"
         android:background="@drawable/fondo_edit_text_blanco"
         android:inputType="textMultiLine"
