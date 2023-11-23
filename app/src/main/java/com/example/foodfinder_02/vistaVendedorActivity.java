@@ -65,7 +65,7 @@ public class vistaVendedorActivity extends AppCompatActivity {
         startActivity(new Intent(this, infoLocalActivity.class));
     }
     private void irEstablecerUbicacion(){
-        startActivity(new Intent(this, establecerHorarioActivity.class));
+        startActivity(new Intent(this, establecerUbicacionActivity.class));
     }
     private void irEstablecerHorario(){
         startActivity(new Intent(this, establecerHorarioActivity.class));
