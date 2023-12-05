@@ -1,9 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/principal"
     tools:context=".establecerHorarioActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/principal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Horario"
+        android:id="@+id/txtHorario"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lunes"
+            android:textColor="@color/black"
+            android:id="@+id/checkboxLunes"
+            android:textSize="18sp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Martes"
+            android:textColor="@color/black"
+            android:id="@+id/checkboxMartes"
+            android:textSize="18sp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Miercoles"
+            android:textColor="@color/black"
+            android:id="@+id/checkboxMiercoles"
+            android:textSize="18sp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jueves"
+            android:textColor="@color/black"
+            android:id="@+id/checkboxJueves"
+            android:textSize="18sp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Viernes"
+            android:textColor="@color/black"
+            android:id="@+id/checkboxViernes"
+            android:textSize="18sp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sabado"
+            android:textColor="@color/black"
+            android:id="@+id/checkboxSabado"
+            android:textSize="18sp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Domingo"
+            android:textColor="@color/black"
+            android:id="@+id/checkboxDomingo"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:text="Selecciona hora inicio"
+                android:id="@+id/btnHoraInicio"
+                android:textColor="@color/white"
+                android:background="@drawable/fondo_botones_color_secundario"
+                android:layout_margin="5dp"
+                android:padding="15dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:text="Selecciona hora fin"
+                android:id="@+id/btnHoraFinal"
+                android:textColor="@color/white"
+                android:background="@drawable/fondo_botones_color_secundario"
+                android:layout_margin="5dp"
+                android:padding="15dp"
+                android:gravity="center"/>
+            
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/txtHoraInicio"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/txtHoraFinal"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_margin="5dp"/>
+
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar horario"
+            android:id="@+id/btnGuardarHorario"
+            android:background="@drawable/fondo_botones_color_secundario"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"/>
+
+
+
+    </LinearLayout>
+</ScrollView>
