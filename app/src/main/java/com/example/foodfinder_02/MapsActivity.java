@@ -18,7 +18,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.foodfinder_02.clases.FirebaseMapHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -30,14 +33,26 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.foodfinder_02.databinding.ActivityMapsBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-
+    private FirebaseDatabase database;
+    private DatabaseReference referenceUbicaciones;
+    private FirebaseMapHelper firebaseMapHelper;
 
     ///////////////////////Codigo para ubicacion en tiempo real////////////////////
     private SupportMapFragment mapaFragmento;
@@ -69,6 +84,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        database = FirebaseDatabase.getInstance();
+        referenceUbicaciones = database.getReference("ubicaciones");
+
+        firebaseMapHelper = new FirebaseMapHelper(MapsActivity.this, mMap);
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -102,9 +122,67 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setSmallestDisplacement(5);
 
+        agregarMarcadoresAlMapa();
         startLocation();
+        //firebaseMapHelper.agregarMarcadoresAlMapa();
+
+        // Obtén una referencia a tu base de datos en Firebase y al nodo "ubicaciones"
+
 
     }
+
+    public void agregarMarcadoresAlMapa() {
+        referenceUbicaciones.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Limpiar marcadores existentes en el mapa si es necesario
+                mMap.clear();
+
+                // Iterar sobre los datos en Firebase y agregar marcadores al mapa
+                for (DataSnapshot lugarSnapshot : dataSnapshot.getChildren()) {
+                    final String idLugar = lugarSnapshot.getKey(); // Obtener la ID del lugar
+
+                    // Buscar el nombre y la descripción correspondientes a la ID en el nodo "locales"
+                    DatabaseReference referenceLocales = database.getReference("locales");
+                    referenceLocales.child(idLugar).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                String nombreLugar = dataSnapshot.child("nombreLocal").getValue(String.class);
+
+                                // Obtener las coordenadas del lugar
+                                double latitud = 0.0;
+                                double longitud = 0.0;
+                                if (lugarSnapshot.child("latitud").exists() && lugarSnapshot.child("longitud").exists()) {
+                                    latitud = Double.parseDouble(lugarSnapshot.child("latitud").getValue().toString());
+                                    longitud = Double.parseDouble(lugarSnapshot.child("longitud").getValue().toString());
+
+                                    // Crear un LatLng object
+                                    LatLng ubicacion = new LatLng(latitud, longitud);
+                                    mMap.addMarker(new MarkerOptions().position(ubicacion).title(nombreLugar));
+                                    // Añadir marcador al mapa (puedes personalizar esto según tus necesidades)
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Manejar errores en la lectura de datos desde Firebase
+                            Toast.makeText(MapsActivity.this, "Error al obtener datos de Firebase", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Manejar errores en la lectura de datos desde Firebase
+                Toast.makeText(MapsActivity.this, "Error al obtener datos de Firebase", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
 
 
